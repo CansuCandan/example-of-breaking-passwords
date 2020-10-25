@@ -4,16 +4,16 @@ import java.util.Scanner;
 
 public class NewClass {
 
-    public static String sifre_elemanları[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
     public static Random rnd = new Random();
 
-    public static String sifre_olusturucu(int parola_length) {
-        String sifre = "";
+    // This function for creating random password
+    public static String password_creator(int parola_length) {
+        String password = "";
         for (int i = 0; i < parola_length; i++) {
-            int rastgele_parola = rnd.nextInt(sifre_elemanları.length);
-            sifre += rastgele_parola;
+            int rastgele_parola = rnd.nextInt(10);
+            password += rastgele_parola;
         }
-        return sifre;
+        return password;
     }
 
     public static void main(String[] args) {
@@ -24,30 +24,36 @@ public class NewClass {
         System.out.print("Şifreniz kaç karakterli . \n(Min: 4 Max: 12) : ");
         parola_length = scan.nextInt();
 
+        // if user entered invalid character
         while (parola_length < 4 || parola_length > 12) {
 
             System.out.print("Şifreniz kaç karakterli . \n(Min: 4 Max: 12) : ");
             parola_length = scan.nextInt();
 
         }
-        String sifre = "";
-        String sahte_sifre = "";
-        int adım = 0;
-        sifre = sifre_olusturucu(parola_length);
-        System.out.println("Şifre: " + sifre);
-        while (!sifre.equals(sahte_sifre)) {
-            sahte_sifre = sifre_olusturucu(parola_length);
-            System.out.println("Şifre: " + sifre + " Sistemin denediği şifre: " + sahte_sifre);
 
-            if (sifre.equals(sahte_sifre)) {
+        String password = "";
+        String fake_password = "";
+        int step = 0;
+
+        password = password_creator(parola_length);
+        System.out.println("Şifre: " + password);
+        
+        // it is trying to find the password here
+        while (!password.equals(fake_password)) {
+            fake_password = password_creator(parola_length);
+            System.out.println("Şifre: " + password + " Sistemin denediği şifre: " + fake_password);
+             
+            if (password.equals(fake_password)) {
 
                 break;
             }
-            adım++;
-            sahte_sifre = "";
+            step++;
+            fake_password = "";
         }
-        System.out.println("Sistemin bulduğu sifre: " + sahte_sifre);
-        System.out.println(adım + " adımda şifreyi çözdü...");
+        System.out.println("Sistemin bulduğu sifre: " + fake_password);
+        System.out.println(step + " adımda şifreyi çözdü...");
 
     }
 }
+
